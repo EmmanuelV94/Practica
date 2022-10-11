@@ -46,6 +46,11 @@ namespace DAL
 
                 if (response.Success)
                 {
+                    var courses =  dbContext.Courses.Where(a => a.TeacherId == teacherToRemove.Carnet).ToList();
+                    foreach (var course in courses)
+                    {
+                        course.TeacherId = null;
+                    }
                     dbContext.Teachers.Remove(teacherToRemove);
                     dbContext.SaveChanges();
                     response.Success = true;
